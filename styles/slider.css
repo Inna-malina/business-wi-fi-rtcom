@@ -1,0 +1,170 @@
+/* Слайдер для решений */
+.solutions-slider-section {
+  overflow: hidden;
+}
+
+.slider-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 48px;
+}
+
+.slider-container {
+  flex: 1;
+  overflow: hidden;
+  scroll-behavior: smooth;
+}
+
+.slider-track {
+  display: flex;
+  transition: transform 0.4s ease-in-out;
+}
+
+.slide {
+  flex: 0 0 70%; /* Слайд занимает 70% от родителя */
+  padding: 0 15px;
+  box-sizing: border-box;
+}
+
+.slide-content {
+  background: #f5f7fa; /* Серый оттенок */
+  border-radius: 28px;
+  padding: 40px 30px;
+  text-align: center;
+  transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.slide-content:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+}
+
+.slide-image {
+  margin-bottom: 24px;
+}
+
+.slide-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #0a2647;
+  margin-bottom: 12px;
+}
+
+.slide-tag {
+  font-size: 0.85rem;
+  background: #e8edf2;
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 30px;
+  margin-bottom: 20px;
+  font-weight: 600;
+  color: #1a1f2c;
+}
+
+.slide-description {
+  color: #4a5568;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+/* Кнопки навигации */
+.slider-btn {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #0a2647;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.slider-btn:hover {
+  background: #0a2647;
+  border-color: #0a2647;
+  color: white;
+  transform: scale(1.05);
+}
+
+.slider-btn:active {
+  transform: scale(0.95);
+}
+
+/* Точки (пагинация) */
+.slider-dots {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 40px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #cbd5e1;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dot.active {
+  width: 28px;
+  border-radius: 5px;
+  background: #0a2647;
+}
+
+.dot:hover {
+  background: #0a2647;
+  opacity: 0.7;
+}
+
+/* Адаптация для планшетов */
+@media (max-width: 1024px) {
+  .slide {
+    flex: 0 0 80%; /* На планшетах слайд шире */
+  }
+}
+
+/* Адаптация для мобильных */
+@media (max-width: 768px) {
+  .slider-wrapper {
+    gap: 12px;
+  }
+
+  .slide {
+    flex: 0 0 90%; /* На мобильных почти на всю ширину */
+    padding: 0 10px;
+  }
+
+  .slider-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .slide-content {
+    padding: 30px 20px;
+  }
+
+  .slide-title {
+    font-size: 1.5rem;
+  }
+
+  .slide-tag {
+    font-size: 0.75rem;
+  }
+
+  .slide-description {
+    font-size: 0.9rem;
+  }
+}

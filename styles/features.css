@@ -1,0 +1,105 @@
+/* Секция "Почему выбирают RTCOM" - карточки */
+.features-section {
+  background: linear-gradient(135deg, #f8fafe 0%, #ffffff 100%);
+}
+
+.features-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.features-subtitle {
+  font-size: 1.1rem;
+  color: #4a5568;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.features-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+}
+
+.feature-card {
+  flex: 1 1 220px;
+  min-width: 240px;
+  background: white;
+  border-radius: 24px;
+  padding: 32px 24px;
+  text-align: center;
+  transition: all 0.3s ease;
+  border: 1px solid #eef2f8;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+}
+
+.feature-card:hover {
+  transform: translateY(-8px);
+  border-color: #cbdde9;
+  box-shadow: 0 20px 30px -12px rgba(10, 38, 71, 0.15);
+}
+
+.feature-icon {
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.feature-icon svg {
+  transition: transform 0.3s ease;
+}
+
+.feature-card:hover .feature-icon svg {
+  transform: scale(1.05);
+}
+
+.feature-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 16px;
+  color: #0a2647;
+}
+
+.feature-card p {
+  color: #4a5568;
+  line-height: 1.5;
+  font-size: 0.95rem;
+}
+
+/* Адаптация для планшетов */
+@media (max-width: 1024px) {
+  .feature-card {
+    flex: 1 1 280px;
+    padding: 28px 20px;
+  }
+
+  .feature-card h3 {
+    font-size: 1.2rem;
+  }
+}
+
+/* Адаптация для мобильных */
+@media (max-width: 768px) {
+  .features-header h2 {
+    font-size: 1.8rem;
+  }
+
+  .features-subtitle {
+    font-size: 1rem;
+    padding: 0 16px;
+  }
+
+  .features-grid {
+    gap: 20px;
+  }
+
+  .feature-card {
+    flex: 1 1 100%;
+    min-width: auto;
+    padding: 24px 20px;
+  }
+
+  .feature-card h3 {
+    font-size: 1.2rem;
+  }
+}
