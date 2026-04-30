@@ -1,19 +1,28 @@
 document.addEventListener("DOMContentLoaded", function () {
   // ========== FAQ аккордеон ==========
-  const faqButtons = document.querySelectorAll(".faq-question");
-  faqButtons.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const answer = btn.nextElementSibling;
-      const span = btn.querySelector("span");
-      if (answer.classList.contains("active")) {
-        answer.classList.remove("active");
-        if (span) span.innerText = "+";
-      } else {
-        answer.classList.add("active");
-        if (span) span.innerText = "−";
-      }
+  // ========== FAQ аккордеон с плавной анимацией ==========
+  function initFaq() {
+    const faqItems = document.querySelectorAll(".faq-item");
+
+    faqItems.forEach((item) => {
+      const button = item.querySelector(".faq-question");
+      const answer = item.querySelector(".faq-answer");
+      const icon = item.querySelector(".faq-icon");
+
+      if (!button || !answer) return;
+
+      button.addEventListener("click", () => {
+        // Переключаем текущий
+        answer.classList.toggle("active");
+        if (icon) {
+          icon.classList.toggle("active");
+        }
+      });
     });
-  });
+  }
+
+  // Запускаем FAQ
+  initFaq();
 
   // ========== Отправка формы ==========
   const form = document.getElementById("landingForm");
@@ -173,4 +182,136 @@ document.addEventListener("DOMContentLoaded", function () {
     // Первоначальное обновление
     updateSlider();
   }
+
+  // ========== Слайдер отзывов (2 карточки видимы) ==========
+  function initReviewsSlider() {
+    const track = document.querySelector(".reviews-slider-track");
+    const slides = document.querySelectorAll(".review-card");
+    const prevBtn = document.querySelector(".reviews-prev-btn");
+    const nextBtn = document.querySelector(".reviews-next-btn");
+    const dotsContainer = document.querySelector(".reviews-dots");
+
+    if (!track || slides.length === 0) return;
+
+    let currentIndex = 0;
+    let slidesPerView = getSlidesPerView();
+    const totalSlides = slides.length;
+    const totalDots = Math.ceil(totalSlides / slidesPerView);
+
+    // Функция определения количества видимых слайдов
+    function getSlidesPerView() {
+      if (window.innerWidth <= 900) return 1;
+      return 2;
+    }
+
+    // Создание точек пагинации
+    function createDots() {
+      if (!dotsContainer) return;
+      dotsContainer.innerHTML = "";
+      for (let i = 0; i < totalDots; i++) {
+        const dot = document.createElement("div");
+        dot.classList.add("reviews-dot");
+        if (i === 0) dot.classList.add("active");
+        dot.addEventListener("click", () => goToSlide(i * slidesPerView));
+        dotsContainer.appendChild(dot);
+      }
+    }
+
+    // Обновление активной точки
+    function updateActiveDot() {
+      const dots = document.querySelectorAll(".reviews-dot");
+      const activeDotIndex = Math.floor(currentIndex / slidesPerView);
+      dots.forEach((dot, i) => {
+        dot.classList.toggle("active", i === activeDotIndex);
+      });
+    }
+
+    // Обновление слайдера
+    function updateSlider() {
+      const slideWidth = slides[0].offsetWidth;
+      const gap = 24; // gap между слайдами
+      const offset = -currentIndex * (slideWidth + gap);
+      track.style.transform = `translateX(${offset}px)`;
+      updateActiveDot();
+    }
+
+    // Переключение на следующий слайд
+    function nextSlide() {
+      const maxIndex = totalSlides - slidesPerView;
+      if (currentIndex < maxIndex) {
+        currentIndex++;
+      } else {
+        currentIndex = 0;
+      }
+      updateSlider();
+    }
+
+    // Переключение на предыдущий слайд
+    function prevSlide() {
+      const maxIndex = totalSlides - slidesPerView;
+      if (currentIndex > 0) {
+        currentIndex--;
+      } else {
+        currentIndex = maxIndex;
+      }
+      updateSlider();
+    }
+
+    function goToSlide(index) {
+      currentIndex = Math.min(index, totalSlides - slidesPerView);
+      if (currentIndex < 0) currentIndex = 0;
+      updateSlider();
+    }
+
+    // Обработчики кнопок
+    if (nextBtn) nextBtn.addEventListener("click", nextSlide);
+    if (prevBtn) prevBtn.addEventListener("click", prevSlide);
+
+    // Обновление при ресайзе
+    let resizeTimer;
+    window.addEventListener("resize", function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        const newSlidesPerView = getSlidesPerView();
+        if (newSlidesPerView !== slidesPerView) {
+          slidesPerView = newSlidesPerView;
+          currentIndex = 0;
+          createDots();
+          updateSlider();
+        } else {
+          updateSlider();
+        }
+      }, 150);
+    });
+
+    // Свайп для мобильных
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const container = document.querySelector(".reviews-slider-container");
+
+    if (container) {
+      container.addEventListener("touchstart", (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+      });
+
+      container.addEventListener("touchend", (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        const swipeThreshold = 50;
+        const diff = touchEndX - touchStartX;
+        if (Math.abs(diff) > swipeThreshold) {
+          if (diff > 0) {
+            prevSlide();
+          } else {
+            nextSlide();
+          }
+        }
+      });
+    }
+
+    createDots();
+    updateSlider();
+  }
+
+  // Запускаем слайдер отзывов
+  setTimeout(initReviewsSlider, 100);
 });

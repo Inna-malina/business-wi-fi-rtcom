@@ -1,0 +1,75 @@
+/* FAQ секция с плавной анимацией */
+.faq-list {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.faq-item {
+  border-bottom: 1px solid #e2e8f0;
+  margin-bottom: 0;
+}
+
+.faq-question {
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 20px 0;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  color: #1a1f2c;
+  transition: color 0.2s ease;
+}
+
+.faq-question:hover {
+  color: #0a2647;
+}
+
+.faq-question span:first-child {
+  flex: 1;
+}
+
+/* Иконка с анимацией поворота */
+.faq-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #0a2647;
+  transition:
+    transform 0.3s ease,
+    background-color 0.2s ease;
+  border-radius: 50%;
+}
+
+.faq-icon.active {
+  transform: rotate(45deg);
+}
+
+/* Контейнер ответа с плавной анимацией */
+.faq-answer {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease-out;
+  overflow: hidden;
+}
+
+.faq-answer.active {
+  grid-template-rows: 1fr;
+}
+
+.faq-answer-content {
+  overflow: hidden;
+  padding-bottom: 20px;
+  color: #4a5568;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
